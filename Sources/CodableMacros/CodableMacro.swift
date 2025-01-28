@@ -17,6 +17,7 @@ public struct CodableMacro: ExtensionMacro, MemberMacro {
 
         let bindings = classDecl.memberBlock.members
             .compactMap { $0.decl.as(VariableDeclSyntax.self) }
+            .filter { !$0.modifiers.contains { modifier in modifier.name.trimmed.text == "static" } }
             .compactMap { $0.bindings.first }
             .filter { $0.accessorBlock == nil }
 
